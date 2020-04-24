@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://ixiaopi.github.io</id>
+    <title>ixiaopi</title>
+    <updated>2020-04-24T09:29:38.186Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://ixiaopi.github.io"/>
+    <link rel="self" href="https://ixiaopi.github.io/atom.xml"/>
+    <subtitle>自律给我自由</subtitle>
+    <logo>https://ixiaopi.github.io/images/avatar.png</logo>
+    <icon>https://ixiaopi.github.io/favicon.ico</icon>
+    <rights>All rights reserved 2020, ixiaopi</rights>
+    <entry>
+        <title type="html"><![CDATA[嘘]]></title>
+        <id>https://ixiaopi.github.io/post/0JnWddn3K/</id>
+        <link href="https://ixiaopi.github.io/post/0JnWddn3K/">
+        </link>
+        <updated>2020-04-24T05:34:53.000Z</updated>
+        <content type="html"><![CDATA[<p>嘘 别动</p>
+<p>他在睡觉</p>
+<p>他的鼻子也是香香的吗</p>
+<figure data-type="image" tabindex="1"><img src="https://ixiaopi.github.io/post-images/1587707630559.webp" alt="" loading="lazy"></figure>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[算法：数组中重复的数字]]></title>
+        <id>https://ixiaopi.github.io/post/MZuOVs0__/</id>
+        <link href="https://ixiaopi.github.io/post/MZuOVs0__/">
+        </link>
+        <updated>2020-04-19T14:28:55.000Z</updated>
+        <summary type="html"><![CDATA[<p><strong>找出数组中重复的数字：<br>
+在一个长度为 n 的数组 nums 里的所有数字都在 0～n-1 的范围内。数组中某些数字是重复的，但不知道有几个数字重复了，也不知道每个数字重复了几次。请找出数组中任意一个重复的数字。</strong></p>
+]]></summary>
+        <content type="html"><![CDATA[<p><strong>找出数组中重复的数字：<br>
+在一个长度为 n 的数组 nums 里的所有数字都在 0～n-1 的范围内。数组中某些数字是重复的，但不知道有几个数字重复了，也不知道每个数字重复了几次。请找出数组中任意一个重复的数字。</strong></p>
+<!-- more -->
+<p><strong>示例 1：</strong></p>
+<pre><code>输入：
+[2, 3, 1, 0, 2, 5, 3]
+输出：2 或 3 
+</code></pre>
+<p><strong>限制：</strong></p>
+<pre><code>2 &lt;= n &lt;= 100000
+</code></pre>
+<hr>
+<h3 id="题解">题解：</h3>
+<h4 id="算法思想">算法思想</h4>
+<h6 id="1-排序后查找">1. 排序后查找</h6>
+<p>先对数组进行排序，然后从头扫描数组并判断其是否与其前面相邻元素相等。如果是，返回结果即可。</p>
+<h6 id="2-利用哈希表查找">2. 利用哈希表查找</h6>
+<p>创建一个集合，然后依次扫描数组中元素，如果数组中的元素不在集合中，将其加入集合；如果已在集合中，说明该元素重复出现，将其作为结果返回。</p>
+<h6 id="3-巧用数组性质">3. 巧用数组性质</h6>
+<p>假设数组中不存在重复数字，则数组排序后第<code>i</code>个位置的数字为<code>i</code>，数组中有重复数字，则导致某些数字出现在多个位置。从数组首端开始扫描数组，对于下标为i的数字<code>nums[i]</code>，如果其等于下标<code>i</code>，则扫描下一个数字。如果不等，则把它和下标为<code>nums[i]</code>的数字<code>nums[nums[i]]</code>比较，如果两者相等，则说明<code>nums[i]</code>为重复数字，返回其值即可；如果不等，就把第i个数字和第<code>nums[i]</code>个数字交换，这样第<code>nums[i]</code>个数字对应的就是<code>nums[i]</code>,接下来再重复这个交换比较的过程。</p>
+<h4 id="复杂度分析">复杂度分析</h4>
+<h6 id="1-排序后查找-2">1. 排序后查找</h6>
+<ul>
+<li>时间复杂度：O(NlogN)。</li>
+<li>空间复杂度：O(1)。</li>
+</ul>
+<h6 id="2-利用哈希表查找-2">2. 利用哈希表查找</h6>
+<ul>
+<li>时间复杂度：O(N)。</li>
+<li>空间复杂度：O(N)。创建哈希表占用额外存储空间。</li>
+</ul>
+<h6 id="3-巧用数组性质-2">3. 巧用数组性质</h6>
+<ul>
+<li>时间复杂度：O(N)。虽然用到两重循环，但是每个数字最多交换两次就可以找到其对应位置。</li>
+<li>空间复杂度：O(1)。</li>
+</ul>
+<h4 id="思想3算法实现">思想3算法实现</h4>
+<pre><code class="language-swift">class Solution {
+    func findRepeatNumber(_ nums: [Int]) -&gt; Int {
+        var hash = nums
+        for index in hash.indices {
+            while hash[index] != index {
+                if hash[index] == hash[hash[index]] {
+                    return hash[index]
+                } else {
+                    hash.swapAt(index, hash[index])
+                }
+            }
+        }
+        fatalError()
+    }
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[关于]]></title>
+        <id>https://ixiaopi.github.io/post/about/</id>
+        <link href="https://ixiaopi.github.io/post/about/">
+        </link>
+        <updated>2020-02-01T16:00:00.000Z</updated>
+        <content type="html"><![CDATA[<blockquote>
+<p>欢迎来到我的小站，很高兴遇见你！🤝</p>
+</blockquote>
+<h2 id="关于本站">🏠 关于本站</h2>
+<p>业精于勤荒于嬉，行成于思毁于随。博主希望用这个小站来记录下日常工作生活的所思所想。</p>
+<h2 id="博主是谁">👨‍💻 博主是谁</h2>
+<p>现在从事iOS开发，正在朝着全栈不断努力中...</p>
+<h2 id="兴趣爱好">⛹ 兴趣爱好</h2>
+<p>旅游</p>
+<h2 id="联系我呀">📬 联系我呀</h2>
+<p>邮箱：yafeipei@gmail.com</p>
+]]></content>
+    </entry>
+</feed>
